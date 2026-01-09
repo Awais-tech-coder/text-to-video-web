@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Free AI Text to Video</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9800, #ffc107);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+h1 {
+    text-align: center;
+    color: #ff9800;
+}
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-size: 14px;
+}
+select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+}
+select {
+    border: 1px solid #ccc;
+}
+button {
+    background: #ff9800;
+    color: #fff;
+    cursor: pointer;
+}
+button:hover {
+    background: #e68900;
+}
+.status {
+    text-align: center;
+    margin-top: 15px;
+    color: #555;
+}
+video {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    display: none;
+}
+.download {
+    display: none;
+    text-align: center;
+    margin-top: 15px;
+}
+.download a {
+    background: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Free AI Text to Video</h1>
+
+    <textarea id="prompt" placeholder="Enter your text prompt here..."></textarea>
+
+    <select id="orientation">
+        <option value="landscape">Landscape (16:9)</option>
+        <option value="portrait">Portrait (9:16)</option>
+    </select>
+
+    <button onclick="generateVideo()">Generate Video</button>
+
+    <div class="status" id="status"></div>
+
+    <video id="video" controls></video>
+
+    <div class="download" id="download">
+        <a id="downloadLink" href="#" download>Download Video</a>
+    </div>
+
+    <div class="footer">
+        Demo version · Free open-source AI
+    </div>
+</div>
+
+<script>
+function generateVideo() {
+    const prompt = document.getElementById("prompt").value;
+    const orientation = document.getElementById("orientation").value;
+    const status = document.getElementById("status");
+    const video = document.getElementById("video");
+    const download = document.getElementById("download");
+
+    if (!prompt.trim()) {
+        alert("Please enter a text prompt");
+        return;
+    }
+
+    status.innerText = "Generating video... please wait";
+    video.style.display = "none";
+    download.style.display = "none";
+
+    // 🔴 BACKEND API CALL GOES HERE 🔴
+    // Replace this simulation with real API later
+
+    setTimeout(() => {
+        // DEMO VIDEO (replace with backend result)
+        const demoVideo = "https://www.w3schools.com/html/mov_bbb.mp4";
+
+        video.src = demoVideo;
+        video.style.display = "block";
+
+        document.getElementById("downloadLink").href = demoVideo;
+        download.style.display = "block";
+
+        status.innerText = "Video generated successfully!";
+    }, 3000);
+}
+</script>
+
+</body>
+</html>
