@@ -141,7 +141,8 @@ async function generateVideo() {
 
         const result = await response.json();
 
-        const videoUrl = result.data[0].url;
+        // ✅ CORRECT FOR GRADIO VIDEO OUTPUT
+        const videoUrl = result.data[0];
 
         video.src = videoUrl;
         video.style.display = "block";
