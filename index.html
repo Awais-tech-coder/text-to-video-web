@@ -92,8 +92,8 @@ video {
     <textarea id="prompt" placeholder="Enter your text prompt here..."></textarea>
 
     <select id="orientation">
-        <option value="landscape">Landscape (16:9)</option>
-        <option value="portrait">Portrait (9:16)</option>
+        <option value="Landscape (16:9)">Landscape (16:9)</option>
+        <option value="Portrait (9:16)">Portrait (9:16)</option>
     </select>
 
     <button onclick="generateVideo()">Generate Video</button>
@@ -112,7 +112,7 @@ video {
 </div>
 
 <script>
-function generateVideo() {
+async function generateVideo() {
     const prompt = document.getElementById("prompt").value;
     const orientation = document.getElementById("orientation").value;
     const status = document.getElementById("status");
@@ -124,25 +124,36 @@ function generateVideo() {
         return;
     }
 
-    status.innerText = "Generating video... please wait";
+    status.innerText = "Generating video... please wait (30–60 seconds)";
     video.style.display = "none";
     download.style.display = "none";
 
-    // 🔴 BACKEND API CALL GOES HERE 🔴
-    // Replace this simulation with real API later
+    const API_URL = "https://awaisansari786m-text-to-video-backend.hf.space/run/predict";
 
-    setTimeout(() => {
-        // DEMO VIDEO (replace with backend result)
-        const demoVideo = "https://www.w3schools.com/html/mov_bbb.mp4";
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                data: [prompt, orientation]
+            })
+        });
 
-        video.src = demoVideo;
+        const result = await response.json();
+
+        const videoUrl = result.data[0].url;
+
+        video.src = videoUrl;
         video.style.display = "block";
 
-        document.getElementById("downloadLink").href = demoVideo;
+        document.getElementById("downloadLink").href = videoUrl;
         download.style.display = "block";
 
         status.innerText = "Video generated successfully!";
-    }, 3000);
+    } catch (error) {
+        console.error(error);
+        status.innerText = "Error generating video. Please try again.";
+    }
 }
 </script>
 
