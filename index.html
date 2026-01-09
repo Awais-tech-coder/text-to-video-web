@@ -1,52 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Free AI Text to Video</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
+<html>
 <body>
 
 <h2>Free AI Text to Video</h2>
 
-<textarea id="prompt" rows="4" cols="50">
+<p>Text example:</p>
+<pre>
 A cinematic sunrise over mountains with soft light and slow camera movement
-</textarea>
-<br><br>
+</pre>
 
-<button onclick="generateVideo()">Generate Video</button>
-
+<button onclick="gen()">Generate Video</button>
 <p id="status"></p>
 
-<video id="video" controls width="480"></video>
+<video id="v" controls width="480"></video>
 
 <script>
-async function generateVideo() {
-    const status = document.getElementById("status");
-    const video = document.getElementById("video");
-
-    status.innerText = "Generating video… please wait";
-    video.src = "";
-
-    try {
-        const response = await fetch(
-            "https://awaisansari786m-text-to-video-backend.hf.space/generate",
-            {
-                method: "POST"
-            }
-        );
-
-        // ✅ IMPORTANT: read as BLOB, not JSON
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-
-        video.src = url;
-        status.innerText = "Video generated successfully!";
-    } catch (e) {
-        console.error(e);
-        status.innerText = "Error generating video. Please try again.";
-    }
+async function gen() {
+  document.getElementById("status").innerText = "Generating video...";
+  const res = await fetch(
+    "https://awaisansari786m-text-to-video-backend.hf.space/generate"
+  );
+  const blob = await res.blob();
+  document.getElementById("v").src = URL.createObjectURL(blob);
+  document.getElementById("status").innerText = "Done!";
 }
 </script>
 
